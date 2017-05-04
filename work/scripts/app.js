@@ -221,10 +221,10 @@
   };
 
   // TODO add saveSelectedCities function here
-  // Save list of cities to localStorage.
+  // Save list of cities to localforage.
   app.saveSelectedCities = function() {
     var selectedCities = JSON.stringify(app.selectedCities);
-    localStorage.selectedCities = selectedCities;
+    localforage.selectedCities = selectedCities;
   };
 
   app.getIconClass = function(weatherCode) {
@@ -339,14 +339,14 @@
    *
    * Code required to start the app
    *
-   * NOTE: To simplify this codelab, we've used localStorage.
+   * NOTE: To simplify this codelab, we've used localforage.
    *   localStorage is a synchronous API and has serious performance
    *   implications. It should not be used in production applications!
    *   Instead, check out IDB (https://www.npmjs.com/package/idb) or
    *   SimpleDB (https://gist.github.com/inexorabletash/c8069c042b734519680c)
    ************************************************************************/
 
-  app.selectedCities = localStorage.selectedCities;
+  app.selectedCities = localforage.selectedCities;
   if (app.selectedCities) {
     app.selectedCities = JSON.parse(app.selectedCities);
     app.selectedCities.forEach(function(city) {
