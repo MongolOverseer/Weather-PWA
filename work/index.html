@@ -12,6 +12,8 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
+
+ File modified to show weather of different cities than originally.
 -->
 
 <!DOCTYPE html>
@@ -61,7 +63,7 @@
           <div class="humidity"></div>
           <div class="wind">
             <span class="value"></span>
-            <span class="scale">km/h</span>
+            <span class="scale">mph</span>
             <span class="direction"></span>°
           </div>
           <div class="sunrise"></div>
@@ -169,7 +171,8 @@
     </svg>
   </div>
 
-  <script src="scripts/app.js" async></script>
+  <script src="scripts/app.js" async></script>>
+  <script src="node_modules/localforage/src/localforage.js"></script>
 
 </body>
 </html>

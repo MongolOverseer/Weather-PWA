@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// File modified to show more cities
 
 
 (function() {
@@ -28,6 +27,18 @@
     addDialog: document.querySelector('.dialog-container'),
     daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
   };
+
+  /* 
+   * LocalForage configuration
+   */
+  // localforage.config({
+  //   driver      : localforage.INDEXEDDB, // Force IndexedDB; same as using setDriver()
+  //   name        : 'PWA-database',
+  //   version     : 1.0,
+  //   size        : 4980736, // Size of database, in bytes. WebSQL-only for now.
+  //   storeName   : 'dataStore', // Should be alphanumeric, with underscores.
+  //   description : 'IndexedDB storage for Weather PWA'
+  // });
 
 
   /*****************************************************************************
@@ -180,6 +191,7 @@
       caches.match(url).then(function(response) {
         if (response) {
           response.json().then(function updateFromCache(json) {
+            console.log("Result of query: ");
             console.log(json.query.results);
             var results = json.query.results;
             results.key = key;
@@ -220,7 +232,6 @@
     });
   };
 
-  // TODO add saveSelectedCities function here
   // Save list of cities to localStorage.
   app.saveSelectedCities = function() {
     var selectedCities = JSON.stringify(app.selectedCities);
