@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// File modified to show more cities
 
 
 (function() {
@@ -28,6 +27,18 @@
     addDialog: document.querySelector('.dialog-container'),
     daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
   };
+
+  /* 
+   * LocalForage configuration
+   */
+  // localforage.config({
+  //   driver      : localforage.INDEXEDDB, // Force IndexedDB; same as using setDriver()
+  //   name        : 'PWA-database',
+  //   version     : 1.0,
+  //   size        : 4980736, // Size of database, in bytes. WebSQL-only for now.
+  //   storeName   : 'dataStore', // Should be alphanumeric, with underscores.
+  //   description : 'IndexedDB storage for Weather PWA'
+  // });
 
 
   /*****************************************************************************
@@ -167,7 +178,7 @@
    * freshest data.
    */
   app.getForecast = function(key, label) {
-    var statement = 'select * from weather.forecast where woeid=' + key;
+    var statement = 'select * from weather.forecast where woeid=' + key + ' and u=\'c\'';
     var url = 'https://query.yahooapis.com/v1/public/yql?format=json&q=' +
         statement;
     // TODO add cache logic here
@@ -180,6 +191,7 @@
       caches.match(url).then(function(response) {
         if (response) {
           response.json().then(function updateFromCache(json) {
+            console.log("Result of query: ");
             console.log(json.query.results);
             var results = json.query.results;
             results.key = key;
@@ -220,11 +232,10 @@
     });
   };
 
-  // TODO add saveSelectedCities function here
-  // Save list of cities to localforage.
+  // Save list of cities to localStorage.
   app.saveSelectedCities = function() {
     var selectedCities = JSON.stringify(app.selectedCities);
-    localforage.selectedCities = selectedCities;
+    localStorage.selectedCities = selectedCities;
   };
 
   app.getIconClass = function(weatherCode) {
@@ -309,7 +320,7 @@
         condition: {
           text: "Windy",
           date: "Thu, 21 Jul 2016 09:00 PM EDT",
-          temp: 56,
+          temp: 13,
           code: 24
         },
         forecast: [
@@ -339,14 +350,14 @@
    *
    * Code required to start the app
    *
-   * NOTE: To simplify this codelab, we've used localforage.
+   * NOTE: To simplify this codelab, we've used localStorage.
    *   localStorage is a synchronous API and has serious performance
    *   implications. It should not be used in production applications!
    *   Instead, check out IDB (https://www.npmjs.com/package/idb) or
    *   SimpleDB (https://gist.github.com/inexorabletash/c8069c042b734519680c)
    ************************************************************************/
 
-  app.selectedCities = localforage.selectedCities;
+  app.selectedCities = localStorage.selectedCities;
   if (app.selectedCities) {
     app.selectedCities = JSON.parse(app.selectedCities);
     app.selectedCities.forEach(function(city) {
