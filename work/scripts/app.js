@@ -167,7 +167,7 @@
    * freshest data.
    */
   app.getForecast = function(key, label) {
-    var statement = 'select * from weather.forecast where woeid=' + key;
+    var statement = 'select * from weather.forecast where woeid=' + key + ' and u=\'c\'';
     var url = 'https://query.yahooapis.com/v1/public/yql?format=json&q=' +
         statement;
     // TODO add cache logic here
@@ -309,7 +309,7 @@
         condition: {
           text: "Windy",
           date: "Thu, 21 Jul 2016 09:00 PM EDT",
-          temp: 56,
+          temp: 13,
           code: 24
         },
         forecast: [
